@@ -1,6 +1,12 @@
 import java.util.LinkedList;
 import java.util.Queue;
-
+/**
+ * Esta clase tiene el main principal
+ * <li>Repository on Github 
+ * <li>https://github.com/AngelRodriguezV/CatGame
+ * @author AngelRodriguezV
+ * @version 1.0
+ */
 public class Game {
     
     public static void main(String[] args) {

@@ -7,9 +7,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * Esta clase contiene la interfaz Grafica del juego con la
+ * que el usuario va a interacctuar
+ * <li>Repository on Github 
+ * <li>https://github.com/AngelRodriguezV/CatGame
+ * @author AngelRodriguezV
+ * @version 1.0
+ * @see JFrame
+ */
 public class View extends JFrame{
-    
+    //Variables de clase
     private JPanel panel;
     private JButton box1;
     private JButton box2;
@@ -24,8 +32,10 @@ public class View extends JFrame{
     private int currentImage;
     private int positionX;
     private int positionY;
-    
-    public View(){
+    /**
+     * Crea una View por defecto
+     */
+    public View(){ 
         setTitle("Cat Game");
         setSize(616, 639);
         setResizable(false);
@@ -39,29 +49,49 @@ public class View extends JFrame{
         positionX = -1;
         positionY = -1;
     }
-
+    /**
+     * Metodo para cargar las imagenes en el arreglo
+     */
     private void loadImages(){
         images[0] = new ImageIcon("image/x.png");
         images[1] = new ImageIcon("image/o.png");
         images[2] = new ImageIcon("image/box.png");
     }
-
+    /**
+     * Establece el numero de la imagen actual del arreglo
+     * <ul>
+     * <li> 0 para establecer la imagen x
+     * <li> 1 para establecer la imagen o
+     * </ul>
+     * @param n Numero entero       
+     */
     public void setCurrentImage(int n) {
         currentImage = n;
     }
-
+    /**
+     * Obtiene el numero de la imagen actual
+     * @return Un numero 0 o 1
+     */
     public int getCurrentImage() {
         return currentImage;
     }
-
+    /**
+     * Obtiene la cordenada de X
+     * @return La posicion en X
+     */
     public int getPositionX(){
         return positionX;
     }
-
+    /**
+     * Obtiene la cordenada de Y
+     * @return La posicion en Y
+     */
     public int getPositionY(){
         return positionY;
     }
-
+    /**
+     * Crea el panel por defecto
+     */
     private void createPanel() {
         panel = new JPanel();
         setLayout(null);
@@ -70,7 +100,11 @@ public class View extends JFrame{
         panel.setBackground(Color.BLACK);
         getContentPane().add(panel);
     }
-
+    /**
+     * Imprime la imagen actual del jugador
+     * @param x cordenada en X
+     * @param y cordenada en Y
+     */
     private void printImage(int x, int y) {
         panel.updateUI();
         final JLabel label = new JLabel();
@@ -78,10 +112,12 @@ public class View extends JFrame{
         label.setIcon(images[currentImage]);
         panel.add(label);
     }
-
+    /**
+     * Crea los botones
+     */
     private void createButtons() {
         box1 = new JButton();
-        box2 = new JButton(); 
+        box2 = new JButton();
         box3 = new JButton();
         box4 = new JButton();
         box5 = new JButton();
@@ -99,8 +135,12 @@ public class View extends JFrame{
         createBox(box8, 200, 400);
         createBox(box9, 400, 400);
     }
-        
-
+    /**
+     * Configura el boton y su funcion 
+     * @param b un JButton a configurar
+     * @param x cordenada en x para el boton
+     * @param y cordenada en Y para el boton
+     */
     private void createBox(JButton b, int x, int y){
         b.setBounds(x, y, 200, 200);
         b.setIcon(images[2]);
@@ -111,15 +151,15 @@ public class View extends JFrame{
         ActionListener actionBox = new ActionListener() {
             @Override
             public void actionPerformed( ActionEvent ae) {
-                positionX = b.getY() / 200;
-                positionY = b.getX() / 200;
+                positionX = b.getX() / 200;
+                positionY = b.getY() / 200;
                 panel.remove(b);
                 printImage(b.getX(), b.getY());
             }
         };
         b.addActionListener(actionBox);
     }
-    
+
     public static void main(final String[] args) {
         final View prueba = new View();
         prueba.setVisible(true);
