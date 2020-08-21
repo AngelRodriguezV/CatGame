@@ -36,8 +36,8 @@ public class View extends JFrame{
         currentImage = 0;
         createPanel();
         createButtons();
-        positionX = 0;
-        positionY = 0;
+        positionX = -1;
+        positionY = -1;
     }
 
     private void loadImages(){
@@ -46,7 +46,7 @@ public class View extends JFrame{
         images[2] = new ImageIcon("image/box.png");
     }
 
-    public void setCurrentImage(final int n) {
+    public void setCurrentImage(int n) {
         currentImage = n;
     }
 
@@ -58,7 +58,7 @@ public class View extends JFrame{
         return positionX;
     }
 
-    public int getPositiony(){
+    public int getPositionY(){
         return positionY;
     }
 
@@ -71,7 +71,7 @@ public class View extends JFrame{
         getContentPane().add(panel);
     }
 
-    private void printImage(final int x, final int y) {
+    private void printImage(int x, int y) {
         panel.updateUI();
         final JLabel label = new JLabel();
         label.setBounds(x, y, 200, 200);
@@ -81,7 +81,7 @@ public class View extends JFrame{
 
     private void createButtons() {
         box1 = new JButton();
-        box2 = new JButton();
+        box2 = new JButton(); 
         box3 = new JButton();
         box4 = new JButton();
         box5 = new JButton();
@@ -108,13 +108,13 @@ public class View extends JFrame{
         b.setEnabled(true);
         panel.add(b);
 
-        final ActionListener actionBox = new ActionListener() {
+        ActionListener actionBox = new ActionListener() {
             @Override
-            public void actionPerformed(final ActionEvent ae) {
+            public void actionPerformed( ActionEvent ae) {
+                positionX = b.getY() / 200;
+                positionY = b.getX() / 200;
                 panel.remove(b);
                 printImage(b.getX(), b.getY());
-                positionX = b.getX() / 200;
-                positionY = b.getY() / 200;
             }
         };
         b.addActionListener(actionBox);
