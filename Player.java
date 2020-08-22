@@ -20,10 +20,13 @@ public class Player {
    * @param symbol el simbolo que lo representa
    * @param number el numero que lo representa
    */
-  public Player(String name, char symbol, int number) {
+  public Player(String name, char symbol) {
     this.name = name;
     this.symbol = symbol;
-    this.number = number;
+    if (symbol == 'x')
+      this.number = 0;
+    else
+      this.number = 1;
   }
   /**
    * Obtenemos el nombre del jugador

@@ -6,6 +6,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 /**
  * Esta clase contiene la interfaz Grafica del juego con la
@@ -32,12 +35,16 @@ public class View extends JFrame{
     private int currentImage;
     private int positionX;
     private int positionY;
+    private JMenuBar menu;
+    private JMenu inicio;
+    private JMenuItem item1;
+    private JMenuItem item2;
     /**
      * Crea una View por defecto
      */
     public View(){ 
         setTitle("Cat Game");
-        setSize(616, 639);
+        setSize(616, 662);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,6 +55,7 @@ public class View extends JFrame{
         createButtons();
         positionX = -1;
         positionY = -1;
+        createMenu();
     }
     /**
      * Metodo para cargar las imagenes en el arreglo
@@ -158,6 +166,44 @@ public class View extends JFrame{
             }
         };
         b.addActionListener(actionBox);
+    }
+    /**
+     * Bloquea los botones 
+     */
+    public void lockButtons(){
+        box1.setEnabled(false);
+        box2.setEnabled(false);
+        box3.setEnabled(false);
+        box4.setEnabled(false);
+        box5.setEnabled(false);
+        box6.setEnabled(false);
+        box7.setEnabled(false);
+        box8.setEnabled(false);
+        box9.setEnabled(false);
+    }
+    /**
+     * Crea el menu, con sus respectivas funciones
+     */
+    private void createMenu(){
+        menu = new JMenuBar();
+        add(menu);
+        setJMenuBar(menu);
+        inicio = new JMenu("Inicio");
+        menu.add(inicio);
+        item1 = new JMenuItem("Nueva Partida");
+        item2 = new JMenuItem("Maquina");
+        inicio.add(item1);
+        inicio.add(item2);
+        ActionListener actionItem1 = new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent ae) {
+                panel.removeAll();
+                panel.updateUI();
+                createButtons();
+                currentImage = 1;
+            }
+        };
+        item1.addActionListener(actionItem1);
     }
 
     public static void main(final String[] args) {

@@ -22,8 +22,8 @@ public class Game {
     //Instanceamos un Queue de Player
     Queue<Player> queue = new LinkedList<Player>();
     //Agregamos los jugadores al Queue
-    queue.add(new Player("PLAYER 1",'x', 0));
-    queue.add(new Player("PLAYER 2",'o', 1));
+    queue.add(new Player("PLAYER 1",'x'));
+    queue.add(new Player("PLAYER 2",'o'));
     currentPlayer = queue.peek();
     //X y Y capturaran las cordenadas del View
     int x = 0;
@@ -52,6 +52,7 @@ public class Game {
       }
       else break;
     }
+    view.lockButtons();
     //Verificar quien gano
     if (table.gameOver())
       System.out.print("El ganador es:" + currentPlayer.getName());
