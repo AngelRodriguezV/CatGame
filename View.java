@@ -200,7 +200,7 @@ public class View extends JFrame{
                 panel.removeAll();
                 panel.updateUI();
                 createButtons();
-                currentImage = 1;
+                currentImage = 0;
             }
         };
         item1.addActionListener(actionItem1);

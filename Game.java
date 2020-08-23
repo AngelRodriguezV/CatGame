@@ -8,47 +8,40 @@ import java.util.Queue;
  * @version 1.0
  */
 public class Game {
+  //Variables de clase
+  public View view;
+  public Table table;
+  public Player currentPlayer;
+  public Queue<Player> players;
+  public Player player1;
+  public Player player2;
   /**
-   * Funcion principal del juego
-   * @param args
+   * Constructor por defecto
    */
-  public static void main(String[] args) {
-    //Instanceamos una View
-    View view = new View();
-    //Instanceamos un Player
-    Player currentPlayer;
-    //Insatanceamos una tabla
-    Table table = new Table();
-    //Instanceamos un Queue de Player
-    Queue<Player> queue = new LinkedList<Player>();
-    //Agregamos los jugadores al Queue
-    queue.add(new Player("PLAYER 1",'x'));
-    queue.add(new Player("PLAYER 2",'o'));
-    currentPlayer = queue.peek();
-    //X y Y capturaran las cordenadas del View
-    int x = 0;
-    int y = 0;
-    //HAcemos visible al View
-    view.setVisible(true);
-    //Bucle principal
-    while (!table.gameOver()) {
-      if (!table.isEmptyTable()) {
-        try {
-          currentPlayer = queue.peek();
-          x = view.getPositionX();
-          y = view.getPositionY();
-          if (!table.isEmptyBox(x,y)){
-            table.add(currentPlayer.getSymbol(),x,y);
+  public Game(){
+    view = new View();
+    table = new Table();
+    players = new LinkedList<>();
+    player1 = new Player("Player 1", 'x');
+    player2 = new Player("Player 2", 'o');
+    players.add(player1);
+    players.add(player2);
+    currentPlayer = players.peek();
+  }
+  /**
+   * Iniciar juego uno contra uno
+   */
+  public void OneOnOne(){
+    while (!table.gameOver()){
+      if (!table.isEmptyTable()){
+          try {
+            currentPlayer = players.peek();
+            table.add(currentPlayer.getSymbol(), view.getPositionX(), view.getPositionY());
             view.setCurrentImage(currentPlayer.getNumber());
             System.out.println(currentPlayer.getName());
             System.out.println(table.print());
-            queue.add(queue.poll());
-          }
-          else
-            throw new Exception();
-        }
-        catch (Exception e) {
-        }
+            players.add(players.poll());
+          } catch (Exception e) {}
       }
       else break;
     }
@@ -58,7 +51,17 @@ public class Game {
       System.out.print("El ganador es:" + currentPlayer.getName());
     else
       System.out.print("Empate");
-
   }
 
+  /**
+   * Funcion principal del juego
+   * @param args
+   */
+  public static void main(String[] args) {
+    Game game = new Game();
+    game.view.setVisible(true);
+    game.OneOnOne();
+  }
+
+  
 }

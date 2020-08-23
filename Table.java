@@ -22,15 +22,20 @@ public class Table{
     fullBoard = false;
     gameOver = false;
   }
+  
   /**
-   * Agrega el symbolo del jugador a la tabla 
+   * Agrega el symbolo del jugador a la tabla
+   * 
    * @param symbol es el simbolo del jugador
-   * @param x la cordenada en x a posicionar
-   * @param y la cordenada en y a posicionar
+   * @param x      la cordenada en x a posicionar
+   * @param y      la cordenada en y a posicionar
+   * @throws Exception
    */
-  public void add(char symbol, int x, int y){
+  public void add(char symbol, int x, int y) throws Exception {
     if (!isEmptyBox(x, y))
       table[y][x] = symbol;
+    else
+      throw new Exception();
   }
   /**
    * Obtiene los datos de la tabla con un formato
