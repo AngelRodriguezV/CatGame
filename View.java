@@ -39,6 +39,8 @@ public class View extends JFrame{
     private JMenu inicio;
     private JMenuItem item1;
     private JMenuItem item2;
+    private String option;
+    private boolean activeBoard;
     /**
      * Crea una View por defecto
      */
@@ -56,6 +58,21 @@ public class View extends JFrame{
         positionX = -1;
         positionY = -1;
         createMenu();
+        option = "OneOnOne";
+        activeBoard = true;
+    }
+    /**
+     * Cambia el estado de la tabla
+     * @param b un booleano
+     */
+    public void setActiveBoard(boolean b){
+        activeBoard = b;
+    }
+    /**
+     * Obtienes el estado de la tabla
+     */
+    public boolean getActiveBoard(){
+        return activeBoard;
     }
     /**
      * Metodo para cargar las imagenes en el arreglo
@@ -180,6 +197,7 @@ public class View extends JFrame{
         box7.setEnabled(false);
         box8.setEnabled(false);
         box9.setEnabled(false);
+        activeBoard = false;
     }
     /**
      * Crea el menu, con sus respectivas funciones
@@ -201,11 +219,21 @@ public class View extends JFrame{
                 panel.updateUI();
                 createButtons();
                 currentImage = 0;
+                positionX = -1;
+                positionY = -1;
+                option = "OneOnOne";
+                activeBoard = true;;
             }
         };
         item1.addActionListener(actionItem1);
     }
-
+    /**
+     * Obtenemos la opcion del menu
+     * @return la opcion del menu
+     */
+    public String getOption(){
+        return option;
+    }
     public static void main(final String[] args) {
         final View prueba = new View();
         prueba.setVisible(true);

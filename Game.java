@@ -24,8 +24,6 @@ public class Game {
     players = new LinkedList<>();
     player1 = new Player("Player 1", 'x');
     player2 = new Player("Player 2", 'o');
-    players.add(player1);
-    players.add(player2);
     currentPlayer = players.peek();
   }
   /**
@@ -52,6 +50,9 @@ public class Game {
     else
       System.out.print("Empate");
   }
+  public void counterMachine(){
+
+  }
 
   /**
    * Funcion principal del juego
@@ -60,7 +61,22 @@ public class Game {
   public static void main(String[] args) {
     Game game = new Game();
     game.view.setVisible(true);
-    game.OneOnOne();
+    while (true){
+      String option = game.view.getOption();
+      switch (option) {
+        case "OneOnOne":
+          if (game.view.getActiveBoard()){
+            game.players.clear();
+            game.players.add(game.player1);
+            game.players.add(game.player2);
+            game.table.restartTable();
+            game.OneOnOne();
+          }
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   

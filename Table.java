@@ -126,6 +126,8 @@ public class Table{
    */
   public void restartTable(){
     table = new char[3][3];
+    fullBoard = false;
+    gameOver = false;
   }
 }
   
