@@ -1,6 +1,7 @@
 import java.awt.Color;
 
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -159,6 +160,10 @@ public class View extends JFrame{
         createBox(box7, 0, 400);
         createBox(box8, 200, 400);
         createBox(box9, 400, 400);
+        aux.clear();
+        aux.add(box1);aux.add(box2);aux.add(box3);
+        aux.add(box4);aux.add(box5);aux.add(box6);
+        aux.add(box7);aux.add(box8);aux.add(box9);
     }
     /**
      * Configura el boton y su funcion 
@@ -183,6 +188,18 @@ public class View extends JFrame{
             }
         };
         b.addActionListener(actionBox);
+    }
+    private Vector aux = new Vector<JButton>();
+    /**
+     * 
+     */
+    public void machine(int x, int y,int img){
+        for (int n = 0; n < aux.size(); n++){
+            if (((JButton)aux.get(n)).getX() == (x * 200) && ((JButton)aux.get(n)).getY() == (y * 200))
+                panel.remove((JButton)aux.get(n));
+        }
+        currentImage = img;
+        printImage(x * 200, y * 200);
     }
     /**
      * Bloquea los botones 
@@ -226,6 +243,20 @@ public class View extends JFrame{
             }
         };
         item1.addActionListener(actionItem1);
+        ActionListener actionItem2 = new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent ae) {
+                panel.removeAll();
+                panel.updateUI();
+                createButtons();
+                currentImage = 0;
+                positionX = -1;
+                positionY = -1;
+                option = "Machine";
+                activeBoard = true;;
+            }
+        };
+        item2.addActionListener(actionItem2);
     }
     /**
      * Obtenemos la opcion del menu

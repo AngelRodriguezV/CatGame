@@ -15,6 +15,7 @@ public class Game {
   public Queue<Player> players;
   public Player player1;
   public Player player2;
+  public Player machine;
   /**
    * Constructor por defecto
    */
@@ -24,6 +25,7 @@ public class Game {
     players = new LinkedList<>();
     player1 = new Player("Player 1", 'x');
     player2 = new Player("Player 2", 'o');
+    machine = new Player("Machine", 'x');
     currentPlayer = players.peek();
   }
   /**
@@ -50,8 +52,36 @@ public class Game {
     else
       System.out.print("Empate");
   }
+  /**
+   * Iniciar juego contra la maquina
+   */
   public void counterMachine(){
-
+    while (!table.gameOver()){
+      if (!table.isEmptyTable()){
+          try {
+            currentPlayer = players.peek();
+            if (currentPlayer.equals(player2)){
+              view.setCurrentImage(currentPlayer.getNumber());
+              table.add(currentPlayer.getSymbol(), view.getPositionX(), view.getPositionY());
+            }
+            else{
+              int auxX = (int)(Math.random() * 6);
+              int auxY = (int)(Math.random() * 6);
+              table.add(currentPlayer.getSymbol(), auxX, auxY);
+              view.machine(auxX, auxY, currentPlayer.getNumber());
+            }
+            System.out.println(currentPlayer.getName());
+            System.out.println(table.print());
+            players.add(players.poll());
+          } catch (Exception e) {}
+      }
+      else break;
+    }
+    view.lockButtons();
+    if (table.gameOver())
+      System.out.print("El ganador es:" + currentPlayer.getName());
+    else
+      System.out.print("Empate");
   }
 
   /**
@@ -73,7 +103,14 @@ public class Game {
             game.OneOnOne();
           }
           break;
-        default:
+        case "Machine":
+          if (game.view.getActiveBoard()){
+            game.players.clear();
+            game.players.add(game.machine);
+            game.players.add(game.player2);
+            game.table.restartTable();
+            game.counterMachine();
+          }
           break;
       }
     }
