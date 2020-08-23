@@ -99,7 +99,7 @@ public class Table{
    * Verifica si hay una jugada ganada
    * @param symbol es el simbolo de ultimo jugador en tirar
    */
-  public void check(char symbol){
+  private void check(char symbol){
     //Checa si hay una jugada en horizontal
     for (int n = 0; n < 3; n++){
       if (table[n][0] == symbol && table[n][1] == symbol && table[n][2] == symbol)
@@ -115,6 +115,12 @@ public class Table{
       gameOver = true;
     if (table[2][0] == symbol && table[1][1] == symbol && table[0][2] == symbol)
       gameOver = true;
+  }
+  /**
+   * reinicia la tabla
+   */
+  public void restartTable(){
+    table = new char[3][3];
   }
 }
   
