@@ -1,3 +1,5 @@
+import javax.swing.ImageIcon;
+
 /**
  * Esta clase contendra los datos del jugador
  * <li>Repository on Github 
@@ -9,7 +11,7 @@ public class Player {
   //Variables de clase
   private String name;
   private char symbol;
-  private int number;
+  private ImageIcon image;
   /**
    * Costrucctor de Player
    * <li>Los Symbolos permitidos son 'x' y 'o'
@@ -20,13 +22,10 @@ public class Player {
    * @param symbol el simbolo que lo representa
    * @param number el numero que lo representa
    */
-  public Player(String name, char symbol) {
+  public Player(String name, char symbol,ImageIcon image) {
     this.name = name;
     this.symbol = symbol;
-    if (symbol == 'x')
-      this.number = 0;
-    else
-      this.number = 1;
+    this.image = image;
   }
   /**
    * Obtenemos el nombre del jugador
@@ -46,8 +45,8 @@ public class Player {
    * Obtenemos el numero del jugador
    * @return el numero del jugador
    */
-  public int getNumber(){
-    return number;
+  public ImageIcon getImage(){
+    return image;
   }
 }
   
