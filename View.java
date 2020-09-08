@@ -1,7 +1,6 @@
 import java.awt.Color;
 
 import java.awt.event.ActionListener;
-import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,23 +16,14 @@ import javax.swing.JPanel;
  * <li>Repository on Github 
  * <li>https://github.com/AngelRodriguezV/CatGame
  * @author AngelRodriguezV
- * @version 1.0
+ * @version 1.1
  * @see JFrame
  */
 public class View extends JFrame{
     //Variables de clase
     private JPanel panel;
-    private JButton box1;
-    private JButton box2;
-    private JButton box3;
-    private JButton box4;
-    private JButton box5;
-    private JButton box6;
-    private JButton box7;
-    private JButton box8;
-    private JButton box9;
-    private ImageIcon[] images;
-    private int currentImage;
+    private JButton[] buttons;
+    private ImageIcon image;
     private int positionX;
     private int positionY;
     private JMenuBar menu;
@@ -41,7 +31,6 @@ public class View extends JFrame{
     private JMenuItem item1;
     private JMenuItem item2;
     private String option;
-    private boolean activeBoard;
     /**
      * Crea una View por defecto
      */
@@ -51,55 +40,14 @@ public class View extends JFrame{
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        images = new ImageIcon[3];
-        loadImages();
-        currentImage = 0;
+        image = new ImageIcon("image/box.png");
+        buttons = new JButton[9];
         createPanel();
         createButtons();
         positionX = -1;
         positionY = -1;
         createMenu();
-        option = "OneOnOne";
-        activeBoard = true;
-    }
-    /**
-     * Cambia el estado de la tabla
-     * @param b un booleano
-     */
-    public void setActiveBoard(boolean b){
-        activeBoard = b;
-    }
-    /**
-     * Obtienes el estado de la tabla
-     */
-    public boolean getActiveBoard(){
-        return activeBoard;
-    }
-    /**
-     * Metodo para cargar las imagenes en el arreglo
-     */
-    private void loadImages(){
-        images[0] = new ImageIcon("image/x.png");
-        images[1] = new ImageIcon("image/o.png");
-        images[2] = new ImageIcon("image/box.png");
-    }
-    /**
-     * Establece el numero de la imagen actual del arreglo
-     * <ul>
-     * <li> 0 para establecer la imagen x
-     * <li> 1 para establecer la imagen o
-     * </ul>
-     * @param n Numero entero       
-     */
-    public void setCurrentImage(int n) {
-        currentImage = n;
-    }
-    /**
-     * Obtiene el numero de la imagen actual
-     * @return Un numero 0 o 1
-     */
-    public int getCurrentImage() {
-        return currentImage;
+        option = "Stop";
     }
     /**
      * Obtiene la cordenada de X
@@ -127,43 +75,30 @@ public class View extends JFrame{
         getContentPane().add(panel);
     }
     /**
-     * Imprime la imagen actual del jugador
+     * Imprime la imagen del jugador
      * @param x cordenada en X
      * @param y cordenada en Y
+     * @param image la imagen del jugador
      */
-    private void printImage(int x, int y) {
+    public void printImage(int x, int y, ImageIcon image) {
         panel.updateUI();
         final JLabel label = new JLabel();
-        label.setBounds(x, y, 200, 200);
-        label.setIcon(images[currentImage]);
+        label.setBounds(x * 200, y * 200, 200, 200);
+        label.setIcon(image);
         panel.add(label);
     }
     /**
      * Crea los botones
      */
     private void createButtons() {
-        box1 = new JButton();
-        box2 = new JButton();
-        box3 = new JButton();
-        box4 = new JButton();
-        box5 = new JButton();
-        box6 = new JButton();
-        box7 = new JButton();
-        box8 = new JButton();
-        box9 = new JButton();
-        createBox(box1, 0, 0);
-        createBox(box2, 200, 0);
-        createBox(box3, 400, 0);
-        createBox(box4, 0, 200);
-        createBox(box5, 200, 200);
-        createBox(box6, 400, 200);
-        createBox(box7, 0, 400);
-        createBox(box8, 200, 400);
-        createBox(box9, 400, 400);
-        aux.clear();
-        aux.add(box1);aux.add(box2);aux.add(box3);
-        aux.add(box4);aux.add(box5);aux.add(box6);
-        aux.add(box7);aux.add(box8);aux.add(box9);
+        for (int m = 0;m < 9; m++)
+            buttons[m] = new JButton();
+        int ij = 0;
+        for (int i = 0; i <= 400; i+=200)
+            for (int j = 0; j <= 400; j+=200){
+                createBox(buttons[ij], j, i);
+                ij++;
+            }
     }
     /**
      * Configura el boton y su funcion 
@@ -173,7 +108,7 @@ public class View extends JFrame{
      */
     private void createBox(JButton b, int x, int y){
         b.setBounds(x, y, 200, 200);
-        b.setIcon(images[2]);
+        b.setIcon(image);
         b.setOpaque(true);
         b.setEnabled(true);
         panel.add(b);
@@ -184,38 +119,20 @@ public class View extends JFrame{
                 positionX = b.getX() / 200;
                 positionY = b.getY() / 200;
                 panel.remove(b);
-                printImage(b.getX(), b.getY());
             }
         };
         b.addActionListener(actionBox);
     }
-    private Vector aux = new Vector<JButton>();
-    /**
-     * 
-     */
-    public void machine(int x, int y,int img){
-        for (int n = 0; n < aux.size(); n++){
-            if (((JButton)aux.get(n)).getX() == (x * 200) && ((JButton)aux.get(n)).getY() == (y * 200))
-                panel.remove((JButton)aux.get(n));
-        }
-        currentImage = img;
-        printImage(x * 200, y * 200);
-    }
+    
     /**
      * Bloquea los botones 
      */
     public void lockButtons(){
-        box1.setEnabled(false);
-        box2.setEnabled(false);
-        box3.setEnabled(false);
-        box4.setEnabled(false);
-        box5.setEnabled(false);
-        box6.setEnabled(false);
-        box7.setEnabled(false);
-        box8.setEnabled(false);
-        box9.setEnabled(false);
-        activeBoard = false;
+        for (int i = 0; i < 9; i++)
+            buttons[i].setEnabled(false);
+        option = "Stop";
     }
+
     /**
      * Crea el menu, con sus respectivas funciones
      */
@@ -235,11 +152,9 @@ public class View extends JFrame{
                 panel.removeAll();
                 panel.updateUI();
                 createButtons();
-                currentImage = 0;
                 positionX = -1;
                 positionY = -1;
                 option = "OneOnOne";
-                activeBoard = true;;
             }
         };
         item1.addActionListener(actionItem1);
@@ -249,15 +164,14 @@ public class View extends JFrame{
                 panel.removeAll();
                 panel.updateUI();
                 createButtons();
-                currentImage = 0;
                 positionX = -1;
                 positionY = -1;
                 option = "Machine";
-                activeBoard = true;;
             }
         };
         item2.addActionListener(actionItem2);
     }
+
     /**
      * Obtenemos la opcion del menu
      * @return la opcion del menu
@@ -265,6 +179,8 @@ public class View extends JFrame{
     public String getOption(){
         return option;
     }
+
+
     public static void main(final String[] args) {
         final View prueba = new View();
         prueba.setVisible(true);
