@@ -5,13 +5,11 @@
  * <li>Repository on Github 
  * <li>https://github.com/AngelRodriguezV/CatGame
  * @author AngelRodriguezV
- * @version 1.0
+ * @version 1.1
  */
 public class Table{
   //Variables de Clase
   private char[][] table;
-  //Si la tabla esta llena
-  private boolean fullBoard;
   //Si el juego ya acabo
   private boolean gameOver;
   /**
@@ -19,7 +17,6 @@ public class Table{
    */
   public Table(){
     table = new char[3][3];
-    fullBoard = false;
     gameOver = false;
   }
   
@@ -31,7 +28,7 @@ public class Table{
    * @param y      la cordenada en y a posicionar
    * @throws Exception
    */
-  public void add(char symbol, int x, int y) throws Exception {
+  public void add(int x, int y,char symbol) throws Exception {
     if (!isEmptyBox(x, y))
       table[y][x] = symbol;
     else
@@ -41,7 +38,7 @@ public class Table{
    * Obtiene los datos de la tabla con un formato
    * @return los datos de la tabla
    */
-  public String print(){
+  public String toString(){
     //Variable auxiliar
     //En aux se va a ir contatenando los datos
     String aux = "";
@@ -126,7 +123,6 @@ public class Table{
    */
   public void restartTable(){
     table = new char[3][3];
-    fullBoard = false;
     gameOver = false;
   }
 }
