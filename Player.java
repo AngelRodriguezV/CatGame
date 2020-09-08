@@ -20,7 +20,7 @@ public class Player {
    * <li>Y para el symbol 'o' el number '1'
    * @param name el nombre del jugador
    * @param symbol el simbolo que lo representa
-   * @param number el numero que lo representa
+   * @param image la imagen de jugador
    */
   public Player(String name, char symbol,ImageIcon image) {
     this.name = name;

@@ -23,7 +23,7 @@ public class View extends JFrame{
     //Variables de clase
     private JPanel panel;
     private JButton[] buttons;
-    private ImageIcon image;
+    private ImageIcon imageBox;
     private int positionX;
     private int positionY;
     private JMenuBar menu;
@@ -31,6 +31,7 @@ public class View extends JFrame{
     private JMenuItem item1;
     private JMenuItem item2;
     private String option;
+    private boolean active;
     /**
      * Crea una View por defecto
      */
@@ -40,7 +41,7 @@ public class View extends JFrame{
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        image = new ImageIcon("image/box.png");
+        imageBox = new ImageIcon("image/box.png");
         buttons = new JButton[9];
         createPanel();
         createButtons();
@@ -48,6 +49,10 @@ public class View extends JFrame{
         positionY = -1;
         createMenu();
         option = "Stop";
+        active = false;
+    }
+    public boolean getActive(){
+        return active;
     }
     /**
      * Obtiene la cordenada de X
@@ -81,16 +86,22 @@ public class View extends JFrame{
      * @param image la imagen del jugador
      */
     public void printImage(int x, int y, ImageIcon image) {
-        panel.updateUI();
+        x *= 200; y *= 200;
+        for (int n = 0; n < 9; n++)
+            if (buttons[n].getX() == x && buttons[n].getY() == y){
+                panel.remove(buttons[n]);
+            }
         final JLabel label = new JLabel();
-        label.setBounds(x * 200, y * 200, 200, 200);
+        label.setBounds(x, y, 200, 200);
         label.setIcon(image);
         panel.add(label);
+        panel.updateUI();
     }
     /**
      * Crea los botones
      */
     private void createButtons() {
+        active = true;
         for (int m = 0;m < 9; m++)
             buttons[m] = new JButton();
         int ij = 0;
@@ -108,7 +119,7 @@ public class View extends JFrame{
      */
     private void createBox(JButton b, int x, int y){
         b.setBounds(x, y, 200, 200);
-        b.setIcon(image);
+        b.setIcon(imageBox);
         b.setOpaque(true);
         b.setEnabled(true);
         panel.add(b);
@@ -118,7 +129,6 @@ public class View extends JFrame{
             public void actionPerformed( ActionEvent ae) {
                 positionX = b.getX() / 200;
                 positionY = b.getY() / 200;
-                panel.remove(b);
             }
         };
         b.addActionListener(actionBox);
@@ -149,6 +159,7 @@ public class View extends JFrame{
         ActionListener actionItem1 = new ActionListener() {
             @Override
             public void actionPerformed( ActionEvent ae) {
+                active = false;
                 panel.removeAll();
                 panel.updateUI();
                 createButtons();
@@ -161,6 +172,7 @@ public class View extends JFrame{
         ActionListener actionItem2 = new ActionListener() {
             @Override
             public void actionPerformed( ActionEvent ae) {
+                active = false;
                 panel.removeAll();
                 panel.updateUI();
                 createButtons();
@@ -180,8 +192,7 @@ public class View extends JFrame{
         return option;
     }
 
-
-    public static void main(final String[] args) {
+    public static void main(final String[] args){
         final View prueba = new View();
         prueba.setVisible(true);
     }

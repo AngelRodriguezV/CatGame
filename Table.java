@@ -91,7 +91,7 @@ public class Table{
    * @return true si esta ocupada
    * <li>false si no esta ocupada
    */
-  public boolean isEmptyBox(int x, int y){
+  private boolean isEmptyBox(int x, int y){
     //verifica si esta ocupada la posicion
     if(table[y][x] == 'x' || table[y][x] == 'o')
       return true;
